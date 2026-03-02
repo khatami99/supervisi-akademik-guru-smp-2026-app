@@ -1,4 +1,4 @@
-# 📋 Aplikasi Supervisi Akademik Guru Sekolah Menengah Pertama
+# Aplikasi Supervisi Akademik Guru Sekolah Menengah Pertama
 
 > Aplikasi web supervisi akademik guru berbasis instrumen resmi Kemdikbud — dibangun sebagai single-file HTML, berjalan 100% di browser tanpa server.
 
@@ -10,7 +10,11 @@
 
 ## 📸 Screenshot
 
-> *(tambahkan screenshot di sini setelah deploy — klik kanan di browser → Save image → upload ke repo)*
+> <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/15be0ad4-a5bb-4ec6-8d03-aadb139f768b" />
+> <img width="1366" height="678" alt="image" src="https://github.com/user-attachments/assets/09bad9b4-8b4d-405a-a5db-4529b64f5c1e" />
+> <img width="1366" height="683" alt="image" src="https://github.com/user-attachments/assets/b93399b8-10da-4443-80dc-162166a64713" />
+> <img width="1360" height="677" alt="image" src="https://github.com/user-attachments/assets/a75c2df1-9626-45c1-ba5e-3fe1afc3a98f" />
+> <img width="1362" height="681" alt="image" src="https://github.com/user-attachments/assets/32e4dc79-8f17-48a9-91ed-523ecff390b1" />
 
 ---
 
@@ -47,7 +51,7 @@ Tidak ada framework, tidak ada library eksternal, tidak ada backend — **satu f
 ## 🚀 Cara Pakai
 
 ### Opsi 1 — Langsung di Browser
-Buka link: **[https://usernamekamu.github.io/supervisi-akademik-app](https://usernamekamu.github.io/supervisi-akademik-app)**
+Buka link: **(https://khatami99.github.io/supervisi-akademik-guru-smp-2026-app/)**
 
 ### Opsi 2 — Download & Jalankan Lokal
 ```bash

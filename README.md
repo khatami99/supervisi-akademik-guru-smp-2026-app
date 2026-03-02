@@ -2,7 +2,7 @@
 
 > Aplikasi web supervisi akademik guru berbasis instrumen resmi Kemdikbud — dibangun sebagai single-file HTML, berjalan 100% di browser tanpa server.
 
-🔗 **[Coba Langsung →](https://usernamekamu.github.io/supervisi-akademik-app)**
+🔗 **[Coba Langsung →](https://khatami99.github.io/supervisi-akademik-guru-smp-2026-app/)**
 
 ![Preview](https://img.shields.io/badge/Status-Active-brightgreen) ![HTML](https://img.shields.io/badge/HTML-Single%20File-orange) ![License](https://img.shields.io/badge/License-MIT-blue)
 

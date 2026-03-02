@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supervisi Akademik — Kepala Sekolah</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lora:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pr:#1e3a5f;--pl:#2d5a9e;--ac:#f0a500;
+  --ok:#15803d;--er:#dc2626;--wn:#b45309;
+  --bg:#edf1f7;--cd:#fff;--tx:#1e2d3d;--mu:#64748b;--br:#dde3ec;
+  --sw:265px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--tx);display:flex;min-height:100vh;font-size:14px;line-height:1.5}
+::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:3px}
+
+/* SIDEBAR */
+.sb{width:var(--sw);background:var(--pr);color:#fff;position:fixed;top:0;left:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column;z-index:100;box-shadow:3px 0 20px rgba(0,0,0,.15);transition:transform .3s}
+.sbh{padding:20px 16px 16px;border-bottom:1px solid rgba(255,255,255,.1)}
+.sblo{font-family:'Lora',serif;font-size:17px;line-height:1.35}.sblo span{color:var(--ac)}
+.sbsu{font-size:10px;opacity:.45;margin-top:5px;line-height:1.5}
+.sbpw{margin-top:10px;padding:9px 12px;background:rgba(255,255,255,.08);border-radius:8px;font-size:12px}
+.sbpw .lb{opacity:.5;font-size:10px;margin-bottom:2px}.sbpw .nm{font-weight:600}
+.sbsc{padding:14px 14px 4px;font-size:9px;font-weight:700;letter-spacing:2px;opacity:.35;text-transform:uppercase}
+.nv{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;margin:2px 8px;cursor:pointer;font-size:13px;font-weight:500;color:rgba(255,255,255,.65);transition:.18s;user-select:none}
+.nv:hover{background:rgba(255,255,255,.1);color:#fff}
+.nv.on{background:var(--ac);color:#1a1200;font-weight:700}
+.nv .ic{width:22px;font-size:15px;text-align:center;flex-shrink:0}.nv .tx{flex:1}
+.nv .nb{background:rgba(255,255,255,.18);font-size:10px;padding:1px 7px;border-radius:10px;font-weight:600}
+.nv.on .nb{background:rgba(0,0,0,.2)}
+.sbft{margin-top:auto;padding:12px 14px;border-top:1px solid rgba(255,255,255,.1);font-size:10px;opacity:.3;text-align:center}
+
+/* MAIN */
+.mn{margin-left:var(--sw);flex:1;display:flex;flex-direction:column;min-height:100vh}
+.tp{background:#fff;border-bottom:1px solid var(--br);padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:0 1px 8px rgba(0,0,0,.06)}
+.tpt{font-size:14.5px;font-weight:700;color:var(--pr)}.tpr{display:flex;gap:8px;align-items:center}
+
+/* BUTTONS */
+.btn{padding:7px 15px;border-radius:8px;border:none;cursor:pointer;font-family:inherit;font-size:12.5px;font-weight:600;transition:.18s;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.bp{background:var(--pr);color:#fff}.bp:hover{background:var(--pl)}
+.ba{background:var(--ac);color:#1a1200}.ba:hover{filter:brightness(1.07)}
+.bo{background:#fff;color:var(--pr);border:1.5px solid var(--br)}.bo:hover{border-color:var(--pr)}
+.bg{background:transparent;color:var(--mu);border:1.5px solid var(--br)}.bg:hover{color:var(--tx)}
+.be{background:var(--er);color:#fff}
+.bs{padding:5px 11px;font-size:11.5px;border-radius:6px}
+
+/* CONTENT */
+.ct{padding:22px;flex:1}
+.pg{display:none;animation:fi .22s ease}.pg.on{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.ph{margin-bottom:20px}.ph h2{font-family:'Lora',serif;font-size:22px;color:var(--pr)}
+.ph p{color:var(--mu);font-size:13px;margin-top:5px}
+
+/* CARDS */
+.card{background:var(--cd);border-radius:14px;border:1px solid var(--br);overflow:hidden;margin-bottom:18px;box-shadow:0 1px 5px rgba(0,0,0,.04)}
+.ch{padding:14px 20px;border-bottom:1px solid var(--br);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.ctit{font-size:14px;font-weight:700;color:var(--pr);display:flex;align-items:center;gap:7px}
+.cb{padding:20px}
+
+/* STATS */
+.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:20px}
+.sc{background:var(--cd);border-radius:12px;padding:16px 18px;border:1px solid var(--br);box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.si{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.ib{background:#dbeafe}.ig{background:#dcfce7}.iy{background:#fef9c3}.ir{background:#fee2e2}.ip{background:#f3e8ff}
+.sl{font-size:11px;color:var(--mu);font-weight:500;margin-bottom:3px}
+.sv{font-size:26px;font-weight:800;color:var(--pr)}
+.ss{font-size:11px;color:var(--mu);margin-top:2px}
+
+/* TABLE */
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{background:#f8fafc;color:var(--mu);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.5px;padding:10px 14px;text-align:left;border-bottom:2px solid var(--br);white-space:nowrap}
+td{padding:10px 14px;border-bottom:1px solid #f1f5f9;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#fafbfc}
+
+/* FORM */
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fi{display:flex;flex-direction:column;gap:5px}.fi.fw{grid-column:1/-1}
+.fi label{font-size:11.5px;font-weight:600;color:var(--mu)}
+.fi input,.fi select,.fi textarea{padding:8px 11px;border:1.5px solid var(--br);border-radius:8px;font-size:13.5px;color:var(--tx);transition:.18s;background:#fff;font-family:inherit}
+.fi input:focus,.fi select:focus,.fi textarea:focus{outline:none;border-color:var(--pl);box-shadow:0 0 0 3px rgba(45,90,158,.1)}
+
+/* BADGE */
+.bd{padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;display:inline-block;white-space:nowrap}
+.bok{background:#dcfce7;color:#15803d}
+.bwn{background:#fef3c7;color:#92400e}
+.bng{background:#fee2e2;color:#991b1b}
+.bin{background:#dbeafe;color:#1e40af}
+.bgr{background:#f1f5f9;color:#475569}
+
+/* MODAL */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:200;display:none;align-items:center;justify-content:center;padding:16px}
+.ov.on{display:flex}
+.md{background:#fff;border-radius:16px;width:100%;max-width:560px;max-height:92vh;overflow-y:auto;box-shadow:0 25px 60px rgba(0,0,0,.22);animation:mi .22s ease}
+@keyframes mi{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.mh{padding:18px 22px;border-bottom:1px solid var(--br);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#fff;z-index:1}
+.mh h3{font-size:15px;font-weight:700;color:var(--pr)}
+.mcl{background:none;border:none;font-size:20px;cursor:pointer;color:var(--mu);width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:6px}.mcl:hover{background:#f1f5f9}
+.mb{padding:22px}
+.mf{padding:14px 22px;border-top:1px solid var(--br);display:flex;justify-content:flex-end;gap:8px;background:#fafafa}
+
+/* INSTRUMEN */
+.gsl{display:flex;align-items:center;gap:10px;background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:10px;padding:11px 16px;margin-bottom:18px;flex-wrap:wrap}
+.gsl label{font-size:12px;font-weight:700;color:#1d4ed8;white-space:nowrap}
+.gsl select{flex:1;min-width:180px;padding:7px 10px;border:1.5px solid #93c5fd;border-radius:7px;font-size:13px;background:#fff;font-weight:600;font-family:inherit;color:var(--tx)}
+.gsl select:focus{outline:none;border-color:#1d4ed8}
+
+/* Instrumen table */
+.it{width:100%;border-collapse:collapse;font-size:13px}
+.it th{background:#f0f4f8;color:var(--pr);font-weight:700;font-size:11.5px;padding:10px 14px;border:1px solid var(--br);text-align:left}
+.it td{border:1px solid #e9eef5;padding:9px 13px;vertical-align:middle}
+.it .rg td{background:#e4eaf4;font-weight:700;color:var(--pr);font-size:13px}
+.it .rg2 td{background:#eef2f9;font-weight:600;color:var(--pl);font-size:12.5px;padding-left:20px}
+.it .ri td{background:#fff}
+.it .ri:hover td{background:#f8fafc}
+.it .ri.ind td:nth-child(2){padding-left:22px}
+
+/* Radio Ada/Tidak */
+.rad{display:flex;gap:8px;justify-content:center}
+.rad label{display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12.5px;font-weight:600;padding:5px 10px;border-radius:7px;border:1.5px solid var(--br);transition:.15s;user-select:none}
+.rad label:hover{border-color:#94a3b8;background:#f8fafc}
+.rad label.ada{background:#dcfce7;border-color:#4ade80;color:var(--ok)}
+.rad label.tdk{background:#fee2e2;border-color:#f87171;color:var(--er)}
+.rad input[type=radio]{display:none}
+
+.skc{text-align:center;font-weight:700;font-size:14px;width:55px}
+
+/* Hasil box */
+.hb{background:linear-gradient(135deg,var(--pr) 0%,var(--pl) 100%);color:#fff;border-radius:12px;padding:18px 22px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:4px}
+.hbig{font-size:54px;font-weight:800;line-height:1;min-width:82px}
+.hbmi .hbl{font-size:10.5px;opacity:.65;margin-bottom:3px}
+.hbmi .hbp{font-size:20px;font-weight:700}
+.hbmi .hbc{font-size:11.5px;opacity:.72;margin-top:4px;line-height:1.6;max-width:280px}
+.hbba{flex:1;min-width:140px}
+.hbba .hbbl{font-size:10.5px;opacity:.65}
+.hbba .hbbv{font-size:20px;font-weight:700}
+.hbbg{background:rgba(255,255,255,.2);border-radius:6px;height:8px;margin-top:5px;overflow:hidden}
+.hbbf{border-radius:6px;height:8px;background:var(--ac);transition:width .7s ease}
+
+/* Tindak Lanjut */
+.tlb{background:#fffbeb;border:1.5px solid #fde68a;border-radius:10px;padding:13px 17px;margin-top:12px}
+.tlb h4{font-size:12.5px;font-weight:700;color:#92400e;margin-bottom:5px}
+.tlb p{font-size:12.5px;color:#78350f;line-height:1.6}
+
+/* Alerts */
+.al{padding:11px 15px;border-radius:8px;font-size:13px;margin-bottom:12px;display:flex;gap:8px}
+.ali{background:#eff6ff;color:#1e40af;border:1px solid #bfdbfe}
+.alw{background:#fffbeb;color:#92400e;border:1px solid #fde68a}
+.alo{background:#f0fdf4;color:#15803d;border:1px solid #86efac}
+
+/* Toast */
+.toastwrap{position:fixed;bottom:22px;right:22px;z-index:999;display:flex;flex-direction:column;gap:8px}
+.toast{background:#1e293b;color:#fff;padding:10px 17px;border-radius:10px;font-size:13px;font-weight:500;box-shadow:0 6px 20px rgba(0,0,0,.2);animation:tin .25s ease;display:flex;align-items:center;gap:8px;max-width:300px}
+.toast.ok{background:var(--ok)}.toast.er{background:var(--er)}
+@keyframes tin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* Empty */
+.emp{text-align:center;padding:48px 20px;color:var(--mu)}
+.emp .ei{font-size:46px;margin-bottom:12px;opacity:.5}
+.emp h3{font-size:16px;font-weight:700;color:var(--tx);margin-bottom:6px}
+.emp p{font-size:13px}
+
+/* Responsive */
+@media(max-width:768px){
+  :root{--sw:0px}
+  .sb{transform:translateX(-265px);width:265px}
+  .sb.on{transform:translateX(0)}
+  .mn{margin-left:0}
+  .sbt{display:flex!important}
+  .fg{grid-template-columns:1fr}
+  .ct{padding:14px}
+  .sg{grid-template-columns:1fr 1fr}
+}
+@media(max-width:460px){.sg{grid-template-columns:1fr}}
+.sbt{display:none;position:fixed;top:14px;left:14px;z-index:150;background:var(--pr);color:#fff;border:none;border-radius:8px;padding:8px 11px;font-size:18px;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.2)}
+@media print{.sb,.tp,.np{display:none!important}.mn{margin-left:0!important}body{background:#fff}}
+</style>
+</head>
+<body>
+
+<aside class="sb" id="SB">
+  <div class="sbh">
+    <div class="sblo">Supervisi <span>Akademik</span></div>
+    <div class="sbsu">Instrumen Pengukuran Kinerja Guru<br>Kepala Sekolah</div>
+    <div class="sbpw"><div class="lb">Kepala Sekolah</div><div class="nm" id="sbNm">—</div></div>
+  </div>
+  <div class="sbsc">Utama</div>
+  <div class="nv on" onclick="go('dash')"><span class="ic">📊</span><span class="tx">Dashboard</span></div>
+  <div class="nv" onclick="go('guru')"><span class="ic">👥</span><span class="tx">Data Guru</span><span class="nb" id="nbG">0</span></div>
+  <div class="sbsc">Instrumen Penilaian</div>
+  <div class="nv" onclick="go('g1')"><span class="ic">📋</span><span class="tx">G1 — Adm. Perencanaan</span></div>
+  <div class="nv" onclick="go('g2')"><span class="ic">📝</span><span class="tx">G2 — Penilaian Belajar</span></div>
+  <div class="nv" onclick="go('g3')"><span class="ic">📄</span><span class="tx">G3 — Penyusunan RPP</span></div>
+  <div class="nv" onclick="go('g4')"><span class="ic">🏫</span><span class="tx">G4 — Supervisi KBM</span></div>
+  <div class="sbsc">Laporan</div>
+  <div class="nv" onclick="go('rekap')"><span class="ic">📈</span><span class="tx">Rekap Nilai</span></div>
+  <div class="nv" onclick="go('sett')"><span class="ic">⚙️</span><span class="tx">Pengaturan</span></div>
+  <div class="sbft">Supervisi Akademik v3.0 · Sesuai Peraturan ...</div>
+</aside>
+
+<button class="sbt np" onclick="document.getElementById('SB').classList.toggle('on')">☰</button>
+
+<div class="mn">
+  <header class="tp np">
+    <div class="tpt" id="ttl">📊 Dashboard</div>
+    <div class="tpr">
+      <button class="btn bg bs" onclick="go('rekap')">📈 Rekap</button>
+      <button class="btn ba bs" onclick="openMG()">+ Tambah Guru</button>
+    </div>
+  </header>
+
+  <main class="ct">
+
+    <!-- DASHBOARD -->
+    <div class="pg on" id="pg-dash">
+      <div class="ph"><h2>Dashboard</h2><p>Ringkasan supervisi akademik guru binaan</p></div>
+      <div class="sg">
+        <div class="sc"><div class="si ib">👥</div><div class="sl">Total Guru</div><div class="sv" id="s0">0</div><div class="ss">guru binaan</div></div>
+        <div class="sc"><div class="si ig">✅</div><div class="sl">Sudah Dinilai</div><div class="sv" id="s1">0</div><div class="ss">≥ 1 instrumen</div></div>
+        <div class="sc"><div class="si iy">⭐</div><div class="sl">Rata-rata Nilai</div><div class="sv" id="s2">—</div><div class="ss">semua instrumen</div></div>
+        <div class="sc"><div class="si ir">⚠️</div><div class="sl">Perlu Pembinaan</div><div class="sv" id="s3">0</div><div class="ss">nilai &lt; 60</div></div>
+      </div>
+      <div class="card">
+        <div class="ch"><div class="ctit">📋 Rekap Guru</div><button class="btn bo bs" onclick="go('rekap')">Lihat Semua →</button></div>
+        <div class="cb" id="dB">
+          <div class="emp"><div class="ei">📭</div><h3>Belum ada data</h3><p>Tambahkan guru untuk memulai</p><button class="btn bp" style="margin-top:14px" onclick="go('guru')">+ Tambah Guru</button></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ch"><div class="ctit">🚀 Cara Penggunaan</div></div>
+        <div class="cb">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:12px">
+            <div style="background:#f8fafc;border-radius:10px;padding:14px;border-left:4px solid var(--pr)"><b style="display:block;margin-bottom:4px">1️⃣ Input Data Guru</b><span style="font-size:12px;color:var(--mu)">Masukkan nama, sekolah, mapel, dan data supervisi di menu Data Guru</span></div>
+            <div style="background:#f8fafc;border-radius:10px;padding:14px;border-left:4px solid var(--ac)"><b style="display:block;margin-bottom:4px">2️⃣ Isi Instrumen G1–G4</b><span style="font-size:12px;color:var(--mu)">Pilih guru, centang Ada atau Tidak Ada untuk setiap aspek penilaian</span></div>
+            <div style="background:#f8fafc;border-radius:10px;padding:14px;border-left:4px solid var(--ok)"><b style="display:block;margin-bottom:4px">3️⃣ Rekap & Cetak</b><span style="font-size:12px;color:var(--mu)">Nilai dihitung otomatis. Cetak laporan PDF lengkap per guru kapan saja</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DATA GURU -->
+    <div class="pg" id="pg-guru">
+      <div class="ph"><h2>Data Guru Binaan</h2><p>Kelola daftar guru yang akan disupervisi</p></div>
+      <div class="card">
+        <div class="ch"><div class="ctit">👥 Daftar Guru <span class="bd bin" id="gCnt">0</span></div><button class="btn ba" onclick="openMG()">+ Tambah Guru</button></div>
+        <div class="cb" id="gB"><div class="emp"><div class="ei">👤</div><h3>Belum ada data guru</h3></div></div>
+      </div>
+    </div>
+
+    <!-- G1 -->
+    <div class="pg" id="pg-g1">
+      <div class="ph"><h2>G1 — Administrasi Perencanaan Pembelajaran</h2>
+        <p>12 aspek · Ada = 1, Tidak Ada = 0 · Skor Maks = 12</p></div>
+      <div class="gsl"><label>🎯 Guru:</label><select id="sG1" onchange="loadI('g1')"><option value="">— Pilih guru —</option></select><button class="btn bo bs np" onclick="ctkI('g1')">🖨️ Cetak</button></div>
+      <div id="cG1"><div class="emp" style="padding:40px"><div class="ei">👆</div><h3>Pilih guru untuk mulai penilaian</h3></div></div>
+    </div>
+
+    <!-- G2 -->
+    <div class="pg" id="pg-g2">
+      <div class="ph"><h2>G2 — Penilaian Proses &amp; Hasil Belajar</h2>
+        <p>25 aspek · Ada = 1, Tidak Ada = 0 · Skor Maks = 25</p></div>
+      <div class="gsl"><label>🎯 Guru:</label><select id="sG2" onchange="loadI('g2')"><option value="">— Pilih guru —</option></select><button class="btn bo bs np" onclick="ctkI('g2')">🖨️ Cetak</button></div>
+      <div id="cG2"><div class="emp" style="padding:40px"><div class="ei">👆</div><h3>Pilih guru untuk mulai penilaian</h3></div></div>
+    </div>
+
+    <!-- G3 -->
+    <div class="pg" id="pg-g3">
+      <div class="ph"><h2>G3 — Penyusunan RPP</h2>
+        <p>16 aspek · Ada = 1, Tidak Ada = 0 · Skor Maks = 16</p></div>
+      <div class="gsl"><label>🎯 Guru:</label><select id="sG3" onchange="loadI('g3')"><option value="">— Pilih guru —</option></select><button class="btn bo bs np" onclick="ctkI('g3')">🖨️ Cetak</button></div>
+      <div id="cG3"><div class="emp" style="padding:40px"><div class="ei">👆</div><h3>Pilih guru untuk mulai penilaian</h3></div></div>
+    </div>
+
+    <!-- G4 -->
+    <div class="pg" id="pg-g4">
+      <div class="ph"><h2>G4 — Supervisi Pelaksanaan Pembelajaran (KBM)</h2>
+        <p>44 aspek · Ada = 1, Tidak Tampak = 0 · Skor Maks = 44</p></div>
+      <div class="gsl"><label>🎯 Guru:</label><select id="sG4" onchange="loadI('g4')"><option value="">— Pilih guru —</option></select><button class="btn bo bs np" onclick="ctkI('g4')">🖨️ Cetak</button></div>
+      <div id="cG4"><div class="emp" style="padding:40px"><div class="ei">👆</div><h3>Pilih guru untuk mulai penilaian</h3></div></div>
+    </div>
+
+    <!-- REKAP -->
+    <div class="pg" id="pg-rekap">
+      <div class="ph"><h2>Rekap Nilai</h2><p>Ringkasan nilai seluruh guru dari semua instrumen</p></div>
+      <div id="rkB"><div class="emp"><div class="ei">📊</div><h3>Belum ada data</h3></div></div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="pg" id="pg-sett">
+      <div class="ph"><h2>Pengaturan</h2><p>Identitas kepala sekolah dan manajemen data</p></div>
+      <div class="card">
+        <div class="ch"><div class="ctit">👤 Identitas Kepala Sekolah</div></div>
+        <div class="cb">
+          <div class="fg">
+            <div class="fi"><label>Nama Kepala Sekolah</label><input type="text" id="sNm" placeholder="Nama lengkap..."></div>
+            <div class="fi"><label>NIP</label><input type="text" id="sNP" placeholder="NIP..."></div>
+            <div class="fi"><label>Unit Kerja / MKPS</label><input type="text" id="sUn" placeholder="Nama organisasi..."></div>
+            <div class="fi"><label>Kota / Kabupaten</label><input type="text" id="sKt" placeholder="Kota..."></div>
+          </div>
+          <button class="btn bp" style="margin-top:16px" onclick="savSt()">💾 Simpan</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ch"><div class="ctit">🗄️ Manajemen Data</div></div>
+        <div class="cb">
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn bo" onclick="expDB()">📤 Export JSON</button>
+            <button class="btn bo" onclick="document.getElementById('impF').click()">📥 Import JSON</button>
+            <input type="file" id="impF" accept=".json" style="display:none" onchange="impDB(event)">
+            <button class="btn be" onclick="resDB()">🗑️ Reset Semua Data</button>
+          </div>
+          <p style="font-size:12px;color:var(--mu);margin-top:10px">💡 Data tersimpan di browser (localStorage). Export rutin sebagai backup.</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- MODAL GURU -->
+<div class="ov" id="MG"><div class="md">
+  <div class="mh"><h3 id="MGT">Tambah Guru</h3><button class="mcl" onclick="closeM('MG')">✕</button></div>
+  <div class="mb"><div class="fg">
+    <div class="fi fw"><label>Nama Guru *</label><input type="text" id="gNm" placeholder="Nama lengkap guru..."></div>
+    <div class="fi"><label>Nama Sekolah *</label><input type="text" id="gSk" placeholder="Nama sekolah..."></div>
+    <div class="fi"><label>Mata Pelajaran *</label><input type="text" id="gMp" placeholder="Contoh: IPA"></div>
+    <div class="fi"><label>Jam Tatap Muka</label><input type="number" id="gJm" placeholder="24" min="1"></div>
+    <div class="fi"><label>Kepala Sekolah</label><input type="text" id="gKs" placeholder="Nama kepala sekolah..."></div>
+    <div class="fi"><label>NIP Kepala Sekolah</label><input type="text" id="gNK" placeholder="NIP..."></div>
+    <div class="fi"><label>Tanggal Supervisi</label><input type="date" id="gTg"></div>
+    <div class="fi"><label>Keterangan</label><input type="text" id="gKt" placeholder="Opsional..."></div>
+  </div></div>
+  <div class="mf"><button class="btn bg" onclick="closeM('MG')">Batal</button><button class="btn bp" onclick="savG()">💾 Simpan</button></div>
+</div></div>
+
+<!-- MODAL HAPUS -->
+<div class="ov" id="MH"><div class="md" style="max-width:400px">
+  <div class="mh"><h3>⚠️ Hapus Guru</h3><button class="mcl" onclick="closeM('MH')">✕</button></div>
+  <div class="mb"><p style="font-size:14px">Yakin hapus guru <strong id="hpNm"></strong>? Semua penilaian juga ikut terhapus.</p></div>
+  <div class="mf"><button class="btn bg" onclick="closeM('MH')">Batal</button><button class="btn be" onclick="doHp()">🗑️ Hapus</button></div>
+</div></div>
+
+<div class="toastwrap" id="TW"></div>
+
+<script>
+// ============================================================
+// INSTRUMEN — 100% SESUAI EXCEL PS-01/2021
+// Semua instrumen: biner Ada=1 / Tidak Ada=0
+// G1: 12 item, maks=12
+// G2: 25 item, maks=25
+// G3: 16 item, maks=16
+// G4: 44 item, maks=44
+// Nilai = (jumlah / maks) × 100
+// ============================================================
+
+const DEF = {
+  g1:{
+    judul:'Administrasi Perencanaan Pembelajaran',
+    maks:12,
+    aspek:[
+      {id:'a1', no:'1',  label:'Kalender Pendidikan'},
+      {id:'a2', no:'2',  label:'Program Tahunan'},
+      {id:'a3', no:'3',  label:'Program Semester'},
+      {id:'a4', no:'4',  label:'Silabus'},
+      {id:'a5', no:'5',  label:'Rencana Pelaksanaan Pembelajaran (RPP)'},
+      {id:'a6', no:'6',  label:'Jadwal Tatap Muka'},
+      {id:'a7', no:'7',  label:'Agenda Harian'},
+      {id:'a8', no:'8',  label:'Daftar Nilai (Sikap, Pengetahuan, dan Keterampilan)'},
+      {id:'a9', no:'9',  label:'Kriteria Ketuntasan Minimal'},
+      {id:'a10',no:'10', label:'Absensi Siswa'},
+      {id:'a11',no:'11', label:'Buku Pegangan Guru'},
+      {id:'a12',no:'12', label:'Buku Teks Siswa'},
+    ]
+  },
+  g2:{
+    judul:'Penilaian Proses dan Hasil Belajar Peserta Didik',
+    maks:25,
+    aspek:[
+      {id:'a1', no:'1',   label:'Buku Nilai'},
+      {g:'Melakukan Tes:'},
+      {id:'a2', no:'2a',  label:'Penilaian Harian', ind:1},
+      {id:'a3', no:'2b',  label:'Penilaian Tengah Semester', ind:1},
+      {id:'a4', no:'2c',  label:'Penilaian Akhir Semester', ind:1},
+      {g:'3.a. Penilaian Pengetahuan:'},
+      {id:'a5', no:'3a.1',label:'Tes Tulis', ind:1},
+      {id:'a6', no:'3a.2',label:'Tes Lisan', ind:1},
+      {id:'a7', no:'3a.3',label:'Penugasan', ind:1},
+      {id:'a8', no:'3a.4',label:'Portofolio', ind:1},
+      {id:'a9', no:'3b',  label:'Pengolahan Nilai Pengetahuan', ind:1},
+      {id:'a10',no:'3c',  label:'Deskripsi Nilai Pengetahuan', ind:1},
+      {g:'4.a. Penilaian Keterampilan:'},
+      {id:'a11',no:'4a.1',label:'Unjuk Kerja / Praktik / Kinerja', ind:1},
+      {id:'a12',no:'4a.2',label:'Projek', ind:1},
+      {id:'a13',no:'4a.3',label:'Produk', ind:1},
+      {id:'a14',no:'4a.4',label:'Portofolio', ind:1},
+      {id:'a15',no:'4b',  label:'Pengolahan Nilai Keterampilan', ind:1},
+      {id:'a16',no:'4c',  label:'Deskripsi Nilai Keterampilan', ind:1},
+      {g:'5.a. Penilaian Sikap:'},
+      {id:'a17',no:'5a.1',label:'Observasi', ind:1},
+      {id:'a18',no:'5a.2',label:'Penilaian Diri', ind:1},
+      {id:'a19',no:'5a.3',label:'Penilaian Antar Teman', ind:1},
+      {id:'a20',no:'5b',  label:'Pengolahan Nilai Sikap', ind:1},
+      {id:'a21',no:'5c',  label:'Deskripsi Nilai Sikap', ind:1},
+      {id:'a22',no:'6',   label:'Remedial'},
+      {id:'a23',no:'7',   label:'Pengayaan'},
+      {id:'a24',no:'8',   label:'Analisis Ulangan Harian, UTS, UAS'},
+      {id:'a25',no:'9',   label:'Bank Soal'},
+    ]
+  },
+  g3:{
+    judul:'Penyusunan RPP (Perencanaan Pembelajaran)',
+    maks:16,
+    aspek:[
+      {id:'a1', no:'1',  label:'Identitas Sekolah'},
+      {id:'a2', no:'2',  label:'Kompetensi Inti'},
+      {id:'a3', no:'3',  label:'Kompetensi Dasar'},
+      {id:'a4', no:'4',  label:'Indikator Pencapaian Kompetensi'},
+      {id:'a5', no:'5',  label:'Tujuan Pembelajaran'},
+      {id:'a6', no:'6',  label:'Materi Pembelajaran'},
+      {id:'a7', no:'7',  label:'Pendekatan, Model dan Metode Pembelajaran'},
+      {g:'8. Kegiatan Pembelajaran:'},
+      {id:'a8', no:'8a', label:'Kegiatan Pendahuluan', ind:1},
+      {id:'a9', no:'8b', label:'Kegiatan Inti', ind:1},
+      {id:'a10',no:'8c', label:'Kegiatan Penutup', ind:1},
+      {g:'9. Penilaian, Remedial, Pengayaan:'},
+      {id:'a11',no:'9a', label:'Teknik Penilaian', ind:1},
+      {id:'a12',no:'9b', label:'Instrumen Penilaian', ind:1},
+      {id:'a13',no:'9c', label:'Remedial, Pengayaan', ind:1},
+      {g:'10. Media / Alat / Bahan / Sumber:'},
+      {id:'a14',no:'10a',label:'Media / Alat', ind:1},
+      {id:'a15',no:'10b',label:'Bahan', ind:1},
+      {id:'a16',no:'10c',label:'Sumber Belajar', ind:1},
+    ]
+  },
+  g4:{
+    judul:'Supervisi Pelaksanaan Pembelajaran (KBM)',
+    maks:44,
+    aspek:[
+      {g:'A. KEGIATAN PENDAHULUAN'},
+      {id:'a1', no:'A.1', label:'Melakukan apersepsi dan motivasi'},
+      {id:'a2', no:'A.2', label:'Menyiapkan fisik dan psikis peserta didik dalam mengawali kegiatan pembelajaran'},
+      {id:'a3', no:'A.3', label:'Mengaitkan materi pembelajaran sekarang dengan pengalaman peserta didik atau tema sebelumnya'},
+      {id:'a4', no:'A.4', label:'Mengajukan pertanyaan yang ada keterkaitan dengan tema yang dibelajarkan'},
+      {id:'a5', no:'A.5', label:'Mengajak peserta didik berdinamika melakukan sesuatu kegiatan yang terkait dengan materi'},
+      {id:'a6', no:'A.6', label:'Menyampaikan tujuan pembelajaran atau KD yang akan dicapai'},
+      {id:'a7', no:'A.7', label:'Menyampaikan garis besar cakupan materi'},
+      {id:'a8', no:'A.8', label:'Menjelaskan kegiatan yang akan dilakukan peserta didik untuk menyelesaikan permasalahan atau tugas'},
+      {g:'B. KEGIATAN INTI'},
+      {g2:'B.1 Guru Menguasai Materi Pelajaran:'},
+      {id:'a9', no:'B1.a',label:'Kemampuan menyesuaikan materi dengan tujuan pembelajaran', ind:1},
+      {id:'a10',no:'B1.b',label:'Kemampuan mengaitkan materi dengan pengetahuan lain yang relevan, perkembangan iptek dan kehidupan nyata', ind:1},
+      {id:'a11',no:'B1.c',label:'Menyajikan materi secara sistematis (mudah ke sulit dan dari konkret ke abstrak)', ind:1},
+      {g2:'B.2 Guru Menerapkan Strategi Pembelajaran yang Mendidik:'},
+      {id:'a12',no:'B2.a',label:'Melaksanakan pembelajaran sesuai dengan kompetensi yang akan dicapai', ind:1},
+      {id:'a13',no:'B2.b',label:'Melaksanakan pembelajaran secara urut', ind:1},
+      {id:'a14',no:'B2.c',label:'Menguasai kelas (pengelolaan kelas)', ind:1},
+      {id:'a15',no:'B2.d',label:'Melaksanakan pembelajaran yang bersifat kontekstual', ind:1},
+      {id:'a16',no:'B2.e',label:'Melaksanakan pembelajaran yang memungkinkan tumbuhnya kebiasaan positif (nurturant effect)', ind:1},
+      {id:'a17',no:'B2.f',label:'Melaksanakan pembelajaran sesuai dengan alokasi waktu yang direncanakan', ind:1},
+      {g2:'B.3 Guru Menerapkan Pendekatan Saintifik:'},
+      {id:'a18',no:'B3.a',label:'Menyajikan topik / materi yang mendorong peserta didik melakukan kegiatan mengamati', ind:1},
+      {id:'a19',no:'B3.b',label:'Memancing peserta didik untuk bertanya', ind:1},
+      {id:'a20',no:'B3.c',label:'Menyajikan kegiatan yang mendorong peserta didik untuk mengumpulkan informasi atau data', ind:1},
+      {id:'a21',no:'B3.d',label:'Menyajikan kegiatan yang mendorong peserta didik untuk mengasosiasikan / mengolah informasi', ind:1},
+      {id:'a22',no:'B3.e',label:'Menyajikan kegiatan yang mendorong peserta didik untuk mengomunikasikan hasil secara lisan maupun tertulis', ind:1},
+      {g2:'B.4 Aspek yang Diamati (Pendalaman):'},
+      {id:'a23',no:'B4.a',label:'Memancing peserta didik untuk bertanya', ind:1},
+      {id:'a24',no:'B4.b',label:'Menyajikan kegiatan yang mendorong peserta didik untuk mengumpulkan informasi / data', ind:1},
+      {id:'a25',no:'B4.c',label:'Menyajikan kegiatan yang mendorong peserta didik untuk mengasosiasikan / mengolah informasi', ind:1},
+      {id:'a26',no:'B4.d',label:'Menyajikan kegiatan yang mendorong peserta didik untuk mengomunikasikan hasil secara lisan maupun tertulis', ind:1},
+      {g2:'B.5 Guru Melaksanakan Penilaian Autentik:'},
+      {id:'a27',no:'B5.a',label:'Mengamati sikap dan perilaku peserta didik dalam mengikuti pelajaran', ind:1},
+      {id:'a28',no:'B5.b',label:'Melakukan penilaian keterampilan peserta didik dalam melakukan aktivitas individu / kelompok', ind:1},
+      {id:'a29',no:'B5.c',label:'Mendokumentasikan hasil pengamatan sikap perilaku dan keterampilan peserta didik', ind:1},
+      {g2:'B.6 Memanfaatkan Sumber Belajar / Media Pembelajaran:'},
+      {id:'a30',no:'B6.a',label:'Menunjukkan keterampilan dalam pemanfaatan sumber belajar', ind:1},
+      {id:'a31',no:'B6.b',label:'Menunjukkan keterampilan dalam penggunaan media pembelajaran', ind:1},
+      {id:'a32',no:'B6.c',label:'Menghasilkan media pembelajaran yang menarik', ind:1},
+      {id:'a33',no:'B6.d',label:'Melibatkan peserta didik dalam pemanfaatan sumber belajar', ind:1},
+      {id:'a34',no:'B6.e',label:'Melibatkan peserta didik dalam pemanfaatan media pembelajaran', ind:1},
+      {g2:'B.7 Guru Memicu / Memelihara Keterlibatan Peserta Didik:'},
+      {id:'a35',no:'B7.a',label:'Menumbuhkan partisipasi aktif peserta didik melalui interaksi guru, peserta didik, dan sumber belajar', ind:1},
+      {id:'a36',no:'B7.b',label:'Merespons positif partisipasi peserta didik', ind:1},
+      {id:'a37',no:'B7.c',label:'Menunjukkan sikap terbuka terhadap respons peserta didik', ind:1},
+      {id:'a38',no:'B7.d',label:'Menunjukkan hubungan pribadi yang kondusif', ind:1},
+      {id:'a39',no:'B7.e',label:'Menumbuhkan keceriaan dan antusiasme peserta didik dalam pembelajaran', ind:1},
+      {g2:'B.8 Guru Menggunakan Bahasa yang Benar dan Tepat:'},
+      {id:'a40',no:'B8.a',label:'Menggunakan bahasa lisan secara jelas dan lancar', ind:1},
+      {id:'a41',no:'B8.b',label:'Menggunakan bahasa tulis yang baik dan benar', ind:1},
+      {id:'a42',no:'B8.c',label:'Menyampaikan pesan dan gaya yang sesuai', ind:1},
+      {g:'C. KEGIATAN PENUTUP'},
+      {id:'a43',no:'C9.a',label:'Melakukan refleksi atau membuat rangkuman dengan melibatkan peserta didik'},
+      {id:'a44',no:'C9.b',label:'Melaksanakan tindak lanjut dengan memberikan arahan kegiatan lanjutan atau tugas'},
+    ]
+  }
+};
+
+// Tindak Lanjut — sesuai sheet Evaluasi Excel
+function getTL(v){
+  if(v>=90)return'Memotivasi guru untuk belajar mandiri tentang penyusunan perangkat pembelajaran, penilaian proses dan hasil belajar, penyusunan RPP dan pengelolaan pembelajaran.';
+  if(v>=75)return'Guru dibimbing untuk belajar tentang penyusunan perangkat pembelajaran, penilaian proses dan hasil belajar, penyusunan RPP dan pengelolaan pembelajaran.';
+  if(v>=60)return'Guru diberi pelatihan / workshop tentang penyusunan perangkat pembelajaran, penilaian proses dan hasil belajar, penyusunan RPP dan pengelolaan pembelajaran.';
+  return'Semua Guru diberi pelatihan / workshop tentang penyusunan perangkat pembelajaran, penilaian proses dan hasil belajar, penyusunan RPP dan pengelolaan pembelajaran.';
+}
+
+// ============================================================
+// STATE
+// ============================================================
+let DB={settings:{nama:'',nip:'',unit:'',kota:''},guru:[],penilaian:{}};
+let eId=null,hId=null;
+const LS='saDB3';
+function ldDB(){try{const r=localStorage.getItem(LS);if(r)DB=JSON.parse(r);}catch(e){}}
+function svDB(){localStorage.setItem(LS,JSON.stringify(DB));}
+
+// ============================================================
+// UTILS
+// ============================================================
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,5);}
+function toast(msg,t=''){
+  const w=document.getElementById('TW'),el=document.createElement('div');
+  el.className='toast '+t;el.textContent=msg;w.appendChild(el);
+  setTimeout(()=>{el.style.opacity='0';el.style.transition='opacity .4s';setTimeout(()=>el.remove(),400);},2800);
+}
+function closeM(id){document.getElementById(id).classList.remove('on');}
+function openM(id){document.getElementById(id).classList.add('on');}
+
+function pred(v){
+  if(v>=91)return{lb:'Amat Baik',cs:'bok'};
+  if(v>=76)return{lb:'Baik',cs:'bin'};
+  if(v>=61)return{lb:'Cukup',cs:'bwn'};
+  return{lb:'Kurang Baik',cs:'bng'};
+}
+function fTgl(iso){if(!iso)return'—';try{return new Date(iso).toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});}catch(e){return iso;}}
+function getItems(k){return DEF[k].aspek.filter(a=>a.id);}
+function getVal(k,gid,aid){return((DB.penilaian[gid]||{})[k]||{})[aid];}
+function getJml(k,gid){return getItems(k).reduce((s,a)=>s+(getVal(k,gid,a.id)||0),0);}
+function getNilai(k,gid){return(getJml(k,gid)/DEF[k].maks)*100;}
+function gavg(gid){
+  const vs=['g1','g2','g3','g4'].map(k=>{const p=(DB.penilaian[gid]||{})[k];return p?.saved?getNilai(k,gid):null;}).filter(v=>v!==null);
+  return vs.length?vs.reduce((a,b)=>a+b,0)/vs.length:null;
+}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+const PT={dash:'📊 Dashboard',guru:'👥 Data Guru',g1:'📋 G1 — Adm. Perencanaan',g2:'📝 G2 — Penilaian Belajar',g3:'📄 G3 — Penyusunan RPP',g4:'🏫 G4 — Supervisi KBM',rekap:'📈 Rekap Nilai',sett:'⚙️ Pengaturan'};
+function go(id){
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.nv').forEach(n=>n.classList.remove('on'));
+  document.getElementById('pg-'+id).classList.add('on');
+  document.querySelectorAll('.nv').forEach(n=>{if((n.getAttribute('onclick')||'').includes("'"+id+"'"))n.classList.add('on');});
+  document.getElementById('ttl').textContent=PT[id]||id;
+  document.getElementById('SB').classList.remove('on');
+  if(id==='dash')rdash();
+  if(id==='guru')rguru();
+  if(['g1','g2','g3','g4'].includes(id))rSels();
+  if(id==='rekap')rrekap();
+  if(id==='sett')ldSt();
+}
+
+// ============================================================
+// SETTINGS
+// ============================================================
+function ldSt(){const s=DB.settings;['sNm','sNP','sUn','sKt'].forEach((x,i)=>document.getElementById(x).value=[s.nama,s.nip,s.unit,s.kota][i]||'');}
+function savSt(){DB.settings={nama:document.getElementById('sNm').value.trim(),nip:document.getElementById('sNP').value.trim(),unit:document.getElementById('sUn').value.trim(),kota:document.getElementById('sKt').value.trim()};svDB();document.getElementById('sbNm').textContent=DB.settings.nama||'—';toast('✅ Pengaturan tersimpan','ok');}
+function expDB(){const b=new Blob([JSON.stringify(DB,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='supervisi_'+new Date().toISOString().slice(0,10)+'.json';a.click();toast('📤 Diekspor','ok');}
+function impDB(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{try{DB=JSON.parse(ev.target.result);svDB();initUI();toast('📥 Diimport','ok');}catch(er){toast('❌ Format tidak valid','er');}};r.readAsText(f);}
+function resDB(){if(!confirm('Semua data akan dihapus permanen. Lanjutkan?'))return;DB={settings:{nama:'',nip:'',unit:'',kota:''},guru:[],penilaian:{}};svDB();initUI();toast('🗑️ Data direset','er');}
+
+// ============================================================
+// GURU CRUD
+// ============================================================
+function openMG(id=null){
+  eId=id;document.getElementById('MGT').textContent=id?'Edit Guru':'Tambah Guru';
+  const ks=['gNm','gSk','gMp','gJm','gKs','gNK','gTg','gKt'];
+  const fk=['nama','sekolah','mapel','jam','kepsek','nipKS','tgl','ket'];
+  if(id){const g=DB.guru.find(x=>x.id===id);if(g)ks.forEach((k,i)=>document.getElementById(k).value=g[fk[i]]||'');}
+  else ks.forEach(k=>document.getElementById(k).value='');
+  openM('MG');
+}
+function savG(){
+  const nm=document.getElementById('gNm').value.trim(),sk=document.getElementById('gSk').value.trim(),mp=document.getElementById('gMp').value.trim();
+  if(!nm){toast('❌ Nama guru wajib diisi','er');return;}
+  if(!sk){toast('❌ Nama sekolah wajib diisi','er');return;}
+  if(!mp){toast('❌ Mata pelajaran wajib diisi','er');return;}
+  const d={nama:nm,sekolah:sk,mapel:mp,jam:document.getElementById('gJm').value.trim(),kepsek:document.getElementById('gKs').value.trim(),nipKS:document.getElementById('gNK').value.trim(),tgl:document.getElementById('gTg').value,ket:document.getElementById('gKt').value.trim()};
+  if(eId){const i=DB.guru.findIndex(x=>x.id===eId);if(i>=0)DB.guru[i]={...DB.guru[i],...d};toast('✅ Guru diperbarui','ok');}
+  else{d.id=uid();d.createdAt=new Date().toISOString();DB.guru.push(d);toast('✅ Guru ditambahkan','ok');}
+  svDB();closeM('MG');rguru();rSels();rdash();document.getElementById('nbG').textContent=DB.guru.length;
+}
+function konHp(id){hId=id;const g=DB.guru.find(x=>x.id===id);document.getElementById('hpNm').textContent=g?.nama||'ini';openM('MH');}
+function doHp(){DB.guru=DB.guru.filter(x=>x.id!==hId);delete DB.penilaian[hId];svDB();closeM('MH');rguru();rSels();rdash();document.getElementById('nbG').textContent=DB.guru.length;toast('🗑️ Guru dihapus');}
+
+function rguru(){
+  const el=document.getElementById('gB');
+  document.getElementById('gCnt').textContent=DB.guru.length;
+  document.getElementById('nbG').textContent=DB.guru.length;
+  if(!DB.guru.length){el.innerHTML='<div class="emp"><div class="ei">👤</div><h3>Belum ada data guru</h3></div>';return;}
+  const rows=DB.guru.map((g,i)=>{
+    const av=gavg(g.id),pr=av!==null?pred(av):null;
+    const dn=['g1','g2','g3','g4'].filter(k=>(DB.penilaian[g.id]||{})[k]?.saved);
+    return`<tr>
+      <td style="color:var(--mu);font-size:12px">${i+1}</td>
+      <td><div style="font-weight:600">${g.nama}</div><div style="font-size:11.5px;color:var(--mu)">${g.sekolah}</div></td>
+      <td>${g.mapel}</td>
+      <td><span class="bd ${dn.length===4?'bok':dn.length>0?'bin':'bgr'}">${dn.length}/4 instrumen</span></td>
+      <td>${av!==null?`<span class="bd ${pr.cs}">${av.toFixed(1)} — ${pr.lb}</span>`:'<span class="bd bgr">Belum dinilai</span>'}</td>
+      <td style="white-space:nowrap">
+        <button class="btn bo bs" onclick="openMG('${g.id}')" style="margin-right:4px">✏️</button>
+        <button class="btn be bs" onclick="konHp('${g.id}')">🗑️</button>
+      </td>
+    </tr>`;
+  }).join('');
+  el.innerHTML=`<div class="tw"><table><thead><tr><th>#</th><th>Nama Guru</th><th>Mapel</th><th>Progress</th><th>Rata-rata</th><th>Aksi</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+}
+
+// ============================================================
+// SELECTS
+// ============================================================
+function rSels(){
+  ['g1','g2','g3','g4'].forEach(k=>{
+    const s=document.getElementById('s'+k.toUpperCase());if(!s)return;
+    const cur=s.value;
+    s.innerHTML='<option value="">— Pilih guru —</option>'+DB.guru.map(g=>`<option value="${g.id}">${g.nama} (${g.sekolah})</option>`).join('');
+    if(cur)s.value=cur;
+  });
+}
+
+// ============================================================
+// INSTRUMEN RENDER
+// ============================================================
+function loadI(k){
+  const gid=document.getElementById('s'+k.toUpperCase()).value;
+  const el=document.getElementById('c'+k.toUpperCase());
+  if(!gid){el.innerHTML='<div class="emp" style="padding:40px"><div class="ei">👆</div><h3>Pilih guru untuk mulai penilaian</h3></div>';return;}
+  const guru=DB.guru.find(g=>g.id===gid);if(!guru)return;
+  const def=DEF[k],saved=(DB.penilaian[gid]||{})[k]||{};
+  const items=getItems(k);
+
+  let rows='';
+  def.aspek.forEach(a=>{
+    if(a.g){rows+=`<tr class="rg"><td colspan="4" style="padding:10px 14px">${a.g}</td></tr>`;return;}
+    if(a.g2){rows+=`<tr class="rg2"><td colspan="4" style="padding:8px 14px 8px 20px">${a.g2}</td></tr>`;return;}
+    const v=getVal(k,gid,a.id);
+    const isA=v===1,isT=v===0;
+    rows+=`<tr class="ri${a.ind?' ind':''}">
+      <td style="color:var(--mu);font-size:11.5px;width:55px">${a.no}</td>
+      <td>${a.label}</td>
+      <td style="width:175px">
+        <div class="rad">
+          <label class="${isA?'ada':''}">
+            <input type="radio" name="${k}_${a.id}" value="1" ${isA?'checked':''} onchange="onCh('${k}','${gid}','${a.id}',1,this)">✓ Ada
+          </label>
+          <label class="${isT?'tdk':''}">
+            <input type="radio" name="${k}_${a.id}" value="0" ${isT?'checked':''} onchange="onCh('${k}','${gid}','${a.id}',0,this)">✗ Tidak
+          </label>
+        </div>
+      </td>
+      <td class="skc" id="sk_${k}_${a.id}" style="color:${isA?'var(--ok)':isT?'var(--er)':'var(--mu)'}">${v!==undefined?v:'—'}</td>
+    </tr>`;
+  });
+
+  const filled=items.filter(a=>getVal(k,gid,a.id)!==undefined).length;
+  const nilaiSaved=saved.saved?getNilai(k,gid):null;
+  const pr=nilaiSaved!==null?pred(nilaiSaved):null;
+
+  el.innerHTML=`
+  <div class="card">
+    <div class="ch">
+      <div class="ctit">📋 ${def.judul}</div>
+      <span class="bd ${filled===items.length?'bok':'bgr'}">${filled}/${items.length} terisi · Maks: ${def.maks}</span>
+    </div>
+    <div style="padding:11px 18px;background:#f8fafc;border-bottom:1px solid var(--br);font-size:13px">
+      <strong>${guru.nama}</strong> &nbsp;·&nbsp; ${guru.sekolah} &nbsp;·&nbsp; ${guru.mapel}${guru.jam?' &nbsp;·&nbsp; '+guru.jam+' JP':''}
+    </div>
+    <div class="tw">
+      <table class="it">
+        <thead><tr>
+          <th style="width:55px">No.</th>
+          <th>Aspek Pembinaan</th>
+          <th style="width:175px;text-align:center">Kondisi</th>
+          <th style="width:55px;text-align:center">Skor</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+  </div>
+  <div id="hB_${k}">
+    ${nilaiSaved!==null ? buildHB(nilaiSaved,pr,k,gid) : buildPr(filled,items.length)}
+  </div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:6px" class="np">
+    <button class="btn bp" onclick="simpan('${k}','${gid}')">💾 Simpan Penilaian</button>
+    <button class="btn bg" onclick="resetI('${k}','${gid}')">🔄 Reset</button>
+    ${saved.saved?`<span style="color:var(--ok);font-size:12px;font-weight:600">✅ Disimpan: ${new Date(saved.savedAt).toLocaleString('id-ID')}</span>`:''}
+  </div>`;
+}
+
+function buildHB(nilai,pr,k,gid){
+  const pct=Math.round(nilai);
+  const kurang=getItems(k).filter(a=>getVal(k,gid,a.id)===0).map(a=>a.label);
+  const cat=nilai>=91?'Semua aspek terpenuhi dengan sangat baik.':
+    kurang.length?`Perlu melengkapi: ${kurang.slice(0,2).join(', ')}${kurang.length>2?' (+'+( kurang.length-2)+' lainnya)':'.'}`:
+    nilai>=76?'Administrasi terpenuhi dengan baik.':'Perlu perhatian dan pembinaan lebih lanjut.';
+  const jml=getJml(k,gid);
+  return`<div class="hb">
+    <div class="hbig">${nilai.toFixed(0)}</div>
+    <div class="hbmi">
+      <div class="hbl">Nilai (0–100) · Skor: ${jml}/${DEF[k].maks}</div>
+      <div class="hbp">${pr.lb}</div>
+      <div class="hbc">${cat}</div>
+    </div>
+    <div class="hbba">
+      <div class="hbbl">Ketercapaian</div>
+      <div class="hbbv">${pct}%</div>
+      <div class="hbbg"><div class="hbbf" style="width:${pct}%"></div></div>
+    </div>
+  </div>
+  <div class="tlb"><h4>📌 Tindak Lanjut</h4><p>${getTL(nilai)}</p></div>`;
+}
+function buildPr(f,t){
+  if(f===0)return'<div class="al ali">📝 Belum ada aspek yang diisi. Pilih Ada atau Tidak Ada untuk setiap aspek.</div>';
+  if(f<t)return`<div class="al alw">⏳ ${f} dari ${t} aspek terisi (${Math.round(f/t*100)}%). Selesaikan semua aspek lalu klik Simpan.</div>`;
+  return'<div class="al alo">✅ Semua aspek terisi! Klik "Simpan Penilaian" untuk menyimpan.</div>';
+}
+
+function onCh(k,gid,aid,v,radio){
+  if(!DB.penilaian[gid])DB.penilaian[gid]={};
+  if(!DB.penilaian[gid][k])DB.penilaian[gid][k]={};
+  DB.penilaian[gid][k][aid]=Number(v);
+  // update skor cell
+  const sk=document.getElementById('sk_'+k+'_'+aid);
+  if(sk){sk.textContent=v;sk.style.color=Number(v)===1?'var(--ok)':'var(--er)';}
+  // update label style
+  document.querySelectorAll('input[name="'+k+'_'+aid+'"]').forEach(r=>{
+    r.parentElement.className=r.checked?(r.value==='1'?'ada':'tdk'):'';
+  });
+  // update progress
+  const items=getItems(k),filled=items.filter(a=>getVal(k,gid,a.id)!==undefined).length;
+  const hel=document.getElementById('hB_'+k);
+  if(hel)hel.innerHTML=buildPr(filled,items.length);
+}
+
+function simpan(k,gid){
+  if(!DB.penilaian[gid])DB.penilaian[gid]={};
+  if(!DB.penilaian[gid][k])DB.penilaian[gid][k]={};
+  const items=getItems(k),filled=items.filter(a=>getVal(k,gid,a.id)!==undefined).length;
+  if(filled<items.length){toast('⚠️ Masih '+(items.length-filled)+' aspek belum diisi','er');return;}
+  Object.assign(DB.penilaian[gid][k],{saved:true,savedAt:new Date().toISOString(),nilai:getNilai(k,gid)});
+  svDB();toast('✅ Penilaian disimpan!','ok');loadI(k);rdash();
+}
+function resetI(k,gid){
+  if(!confirm('Reset semua isian penilaian ini?'))return;
+  if(DB.penilaian[gid])delete DB.penilaian[gid][k];
+  svDB();loadI(k);toast('🔄 Penilaian direset');
+}
+
+// ============================================================
+// DASHBOARD
+// ============================================================
+function rdash(){
+  const tot=DB.guru.length,din=DB.guru.filter(g=>gavg(g.id)!==null).length;
+  const all=DB.guru.map(g=>gavg(g.id)).filter(v=>v!==null);
+  const rat=all.length?all.reduce((a,b)=>a+b,0)/all.length:null;
+  const kur=all.filter(v=>v<60).length;
+  document.getElementById('s0').textContent=tot;document.getElementById('s1').textContent=din;
+  document.getElementById('s2').textContent=rat!==null?rat.toFixed(1):'—';
+  document.getElementById('s3').textContent=kur;document.getElementById('nbG').textContent=tot;
+  const el=document.getElementById('dB');
+  if(!tot){el.innerHTML='<div class="emp"><div class="ei">📭</div><h3>Belum ada data</h3><button class="btn bp" style="margin-top:14px" onclick="go(\'guru\')">+ Tambah Guru</button></div>';return;}
+  const rows=DB.guru.slice(0,10).map((g,i)=>{
+    const av=gavg(g.id),pr=av!==null?pred(av):null;
+    const p=DB.penilaian[g.id]||{};
+    const bs=['g1','g2','g3','g4'].map(k=>{const ok=p[k]?.saved;return`<span style="display:inline-block;width:24px;height:24px;line-height:24px;text-align:center;border-radius:5px;font-size:9.5px;font-weight:700;background:${ok?'#dcfce7':'#f1f5f9'};color:${ok?'#15803d':'#94a3b8'}">${k.toUpperCase()}</span>`;}).join('');
+    return`<tr><td style="color:var(--mu);font-size:12px">${i+1}</td><td><div style="font-weight:600;font-size:13px">${g.nama}</div><div style="font-size:11px;color:var(--mu)">${g.sekolah}</div></td><td><div style="display:flex;gap:3px">${bs}</div></td><td>${av!==null?`<span class="bd ${pr.cs}">${av.toFixed(1)}</span>`:'—'}</td><td>${av!==null?`<span class="bd ${pr.cs}">${pr.lb}</span>`:'—'}</td></tr>`;
+  }).join('');
+  el.innerHTML=`<div class="tw"><table><thead><tr><th>#</th><th>Nama Guru</th><th>Instrumen</th><th>Nilai</th><th>Predikat</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+}
+
+// ============================================================
+// REKAP
+// ============================================================
+function rrekap(){
+  const el=document.getElementById('rkB');
+  if(!DB.guru.length){el.innerHTML='<div class="emp"><div class="ei">📊</div><h3>Belum ada data guru</h3></div>';return;}
+  const all=DB.guru.map(g=>gavg(g.id)).filter(v=>v!==null);
+  const rat=all.length?(all.reduce((a,b)=>a+b,0)/all.length).toFixed(1):'—';
+  const ab=all.filter(v=>v>=91).length,b=all.filter(v=>v>=76&&v<91).length,c=all.filter(v=>v>=61&&v<76).length,ku=all.filter(v=>v<61).length;
+  const rows=DB.guru.map((g,i)=>{
+    const p=DB.penilaian[g.id]||{};
+    const ns=['g1','g2','g3','g4'].map(k=>p[k]?.saved?getNilai(k,g.id):null);
+    const av=gavg(g.id),pr=av!==null?pred(av):null;
+    const fc=n=>n!==null?`<b>${n.toFixed(0)}</b>`:'<span style="color:#cbd5e1">—</span>';
+    return`<tr>
+      <td style="color:var(--mu);font-size:12px">${i+1}</td>
+      <td><div style="font-weight:600">${g.nama}</div><div style="font-size:11px;color:var(--mu)">${g.sekolah} · ${g.mapel}</div></td>
+      <td style="text-align:center">${fc(ns[0])}</td>
+      <td style="text-align:center">${fc(ns[1])}</td>
+      <td style="text-align:center">${fc(ns[2])}</td>
+      <td style="text-align:center">${fc(ns[3])}</td>
+      <td style="text-align:center;font-size:16px;font-weight:800">${av!==null?av.toFixed(1):'—'}</td>
+      <td>${av!==null?`<span class="bd ${pr.cs}">${pr.lb}</span>`:'<span class="bd bgr">Belum</span>'}</td>
+      <td><button class="btn bo bs np" onclick="ctkG('${g.id}')">🖨️</button></td>
+    </tr>`;
+  }).join('');
+  el.innerHTML=`
+  <div class="sg" style="grid-template-columns:repeat(auto-fit,minmax(140px,1fr))">
+    <div class="sc"><div class="si ig">🌟</div><div class="sl">Amat Baik (≥91)</div><div class="sv">${ab}</div></div>
+    <div class="sc"><div class="si ib">⭐</div><div class="sl">Baik (76–90)</div><div class="sv">${b}</div></div>
+    <div class="sc"><div class="si iy">🔶</div><div class="sl">Cukup (61–75)</div><div class="sv">${c}</div></div>
+    <div class="sc"><div class="si ir">⚠️</div><div class="sl">Kurang (&lt;61)</div><div class="sv">${ku}</div></div>
+    <div class="sc"><div class="si ip">📊</div><div class="sl">Rata-rata Semua</div><div class="sv">${rat}</div></div>
+  </div>
+  <div class="card">
+    <div class="ch">
+      <div class="ctit">📋 Rekap Nilai Semua Guru</div>
+      <button class="btn bo bs np" onclick="window.print()">🖨️ Cetak Rekap</button>
+    </div>
+    <div class="tw">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th><th>Nama Guru</th>
+            <th style="text-align:center">G1<br><small style="font-weight:400;opacity:.8">/100</small></th>
+            <th style="text-align:center">G2<br><small style="font-weight:400;opacity:.8">/100</small></th>
+            <th style="text-align:center">G3<br><small style="font-weight:400;opacity:.8">/100</small></th>
+            <th style="text-align:center">G4<br><small style="font-weight:400;opacity:.8">/100</small></th>
+            <th style="text-align:center">Rata-rata</th>
+            <th>Predikat</th><th></th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
+// ============================================================
+// CETAK / PRINT
+// ============================================================
+function ctkI(k){const gid=document.getElementById('s'+k.toUpperCase()).value;if(!gid){toast('Pilih guru dahulu','er');return;}ctkG(gid,[k]);}
+
+function ctkG(gid,ks=null){
+  const guru=DB.guru.find(g=>g.id===gid);if(!guru)return;
+  const s=DB.settings,p=DB.penilaian[gid]||{};
+  const keys=ks||['g1','g2','g3','g4'];
+  let ic='';
+  keys.forEach(k=>{
+    const def=DEF[k],d=p[k]||{};
+    let rows='';
+    def.aspek.forEach(a=>{
+      if(a.g){rows+=`<tr style="background:#e4eaf4"><td colspan="3" style="padding:9px 14px;font-weight:700;color:#1e3a5f;font-size:13px">${a.g}</td></tr>`;return;}
+      if(a.g2){rows+=`<tr style="background:#eef2f9"><td colspan="3" style="padding:8px 14px 8px 20px;font-weight:600;color:#2d5a9e;font-size:12.5px">${a.g2}</td></tr>`;return;}
+      const v=d[a.id];
+      rows+=`<tr>
+        <td style="color:#64748b;font-size:11.5px;padding:7px 13px;width:60px">${a.no}</td>
+        <td style="padding:7px 13px${a.ind?';padding-left:22px':''}">${a.label}</td>
+        <td style="text-align:center;font-weight:700;padding:7px 13px;width:100px;color:${v===1?'#15803d':v===0?'#dc2626':'#94a3b8'}">${v===1?'✓ Ada':v===0?'✗ Tidak Ada':'—'}</td>
+      </tr>`;
+    });
+    const nilai=d.saved?getNilai(k,gid):null,pr=nilai!==null?pred(nilai):null;
+    const jml=d.saved?getJml(k,gid):null;
+    ic+=`<div style="margin-bottom:26px;page-break-inside:avoid">
+      <div style="background:#1e3a5f;color:#fff;padding:10px 16px;border-radius:8px 8px 0 0;font-weight:700;font-size:13px">
+        ${k.toUpperCase()} — ${def.judul} &nbsp;·&nbsp; Skor Maks: ${def.maks}
+      </div>
+      <table style="width:100%;border-collapse:collapse;border:1px solid #dde3ec;border-top:none;font-size:13px;font-family:inherit">
+        <thead><tr style="background:#f8fafc">
+          <th style="padding:8px 13px;text-align:left;border-bottom:1px solid #dde3ec;font-size:11px;color:#64748b;width:60px">No.</th>
+          <th style="padding:8px 13px;text-align:left;border-bottom:1px solid #dde3ec;font-size:11px;color:#64748b">Aspek Pembinaan</th>
+          <th style="padding:8px 13px;text-align:center;border-bottom:1px solid #dde3ec;font-size:11px;color:#64748b;width:100px">Kondisi</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+      ${nilai!==null?`
+      <div style="background:#1e3a5f;color:#fff;padding:11px 16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+        <div>
+          <div style="font-size:10px;opacity:.65">Jumlah Skor: ${jml} / ${def.maks}</div>
+          <div style="font-size:22px;font-weight:800">Nilai: ${nilai.toFixed(0)} / 100</div>
+        </div>
+        <div style="font-size:16px;font-weight:700;background:rgba(255,255,255,.15);padding:7px 16px;border-radius:8px">${pr.lb}</div>
+      </div>
+      <div style="background:#fffbeb;border:1px solid #fde68a;padding:10px 14px;font-size:12px;color:#78350f;border-radius:0 0 8px 8px">
+        <b>📌 Tindak Lanjut:</b> ${getTL(nilai)}
+      </div>`:''}
+    </div>`;
+  });
+
+  const tgl=fTgl(guru.tgl);
+  const w=window.open('','_blank');
+  w.document.write(`<!DOCTYPE html><html><head>
+<meta charset="UTF-8">
+<title>Laporan Supervisi — ${guru.nama}</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Arial,sans-serif;color:#1e2d3d;font-size:13px;padding:20px;background:#fff}
+  @media print{.np{display:none}body{padding:0}}
+  table{border-collapse:collapse}
+  tr{border-bottom:1px solid #f1f5f9}
+</style></head><body>
+<div class="np" style="margin-bottom:14px">
+  <button onclick="window.print()" style="background:#1e3a5f;color:#fff;padding:8px 18px;border:none;border-radius:6px;cursor:pointer;font-weight:600;font-size:13px">🖨️ Cetak / Simpan PDF</button>
+</div>
+<div style="text-align:center;margin-bottom:20px;border-bottom:3px solid #1e3a5f;padding-bottom:14px">
+  <div style="font-size:12px;font-weight:600;color:#64748b;margin-bottom:3px">INSTRUMEN PENGUKURAN KINERJA GURU</div>
+  <div style="font-size:20px;font-weight:800;color:#1e3a5f">SUPERVISI AKADEMIK KEPALA SEKOLAH</div>
+  <div style="font-size:11px;color:#64748b;margin-top:3px">Sebelum dan/atau Sesudah Pelaksanaan Pembinaan</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px;background:#f8fafc;border:1px solid #dde3ec;border-radius:8px;padding:13px;font-size:13px">
+  <div><div style="font-size:10px;color:#64748b;font-weight:600;margin-bottom:2px">NAMA GURU</div><div style="font-weight:700">${guru.nama}</div></div>
+  <div><div style="font-size:10px;color:#64748b;font-weight:600;margin-bottom:2px">SEKOLAH</div><div style="font-weight:700">${guru.sekolah}</div></div>
+  <div><div style="font-size:10px;color:#64748b;font-weight:600;margin-bottom:2px">MATA PELAJARAN</div><div style="font-weight:600">${guru.mapel}</div></div>
+  <div><div style="font-size:10px;color:#64748b;font-weight:600;margin-bottom:2px">JAM TATAP MUKA</div><div style="font-weight:600">${guru.jam||'—'} JP</div></div>
+  <div><div style="font-size:10px;color:#64748b;font-weight:600;margin-bottom:2px">KEPALA SEKOLAH</div><div style="font-weight:600">${guru.kepsek||'—'}</div></div>
+  <div><div style="font-size:10px;color:#64748b;font-weight:600;margin-bottom:2px">TANGGAL SUPERVISI</div><div style="font-weight:600">${tgl}</div></div>
+</div>
+${ic}
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:30px;page-break-inside:avoid">
+  <div style="text-align:center">
+    <div style="font-size:12px;margin-bottom:52px">Mengetahui,<br>Guru yang Disupervisi</div>
+    <div style="border-top:1px solid #333;padding-top:5px;font-weight:700">${guru.nama}</div>
+  </div>
+  <div style="text-align:center">
+    <div style="font-size:12px;margin-bottom:2px">${s.kota||'............'}${tgl!=='—'?', '+tgl:''}</div>
+    <div style="font-size:12px;margin-bottom:52px">Kepala Sekolah</div>
+    <div style="border-top:1px solid #333;padding-top:5px;font-weight:700">${s.nama||'____________________'}</div>
+    <div style="font-size:11px;color:#64748b">${s.nip||''}</div>
+  </div>
+</div>
+</body></html>`);
+  w.document.close();
+}
+
+// ============================================================
+// INIT
+// ============================================================
+function initUI(){
+  document.getElementById('sbNm').textContent=DB.settings.nama||'—';
+  document.getElementById('nbG').textContent=DB.guru.length;
+  rdash();rguru();rSels();
+}
+ldDB();initUI();
+document.querySelectorAll('.ov').forEach(o=>o.addEventListener('click',function(e){if(e.target===this)this.classList.remove('on');}));
+</script>
+</body>
+</html>

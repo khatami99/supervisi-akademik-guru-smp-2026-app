@@ -193,7 +193,7 @@ tr:hover td{background:#fafbfc}
   <div class="sbsc">Instrumen Penilaian</div>
   <div class="nv" onclick="go('g1')"><span class="ic">📋</span><span class="tx">G1 — Adm. Perencanaan</span></div>
   <div class="nv" onclick="go('g2')"><span class="ic">📝</span><span class="tx">G2 — Penilaian Belajar</span></div>
-  <div class="nv" onclick="go('g3')"><span class="ic">📄</span><span class="tx">G3 — Penyusunan RPP</span></div>
+  <div class="nv" onclick="go('g3')"><span class="ic">📄</span><span class="tx">G3 — Penyusunan Modul Ajar</span></div>
   <div class="nv" onclick="go('g4')"><span class="ic">🏫</span><span class="tx">G4 — Supervisi KBM</span></div>
   <div class="sbsc">Laporan</div>
   <div class="nv" onclick="go('rekap')"><span class="ic">📈</span><span class="tx">Rekap Nilai</span></div>
@@ -268,7 +268,7 @@ tr:hover td{background:#fafbfc}
 
     <!-- G3 -->
     <div class="pg" id="pg-g3">
-      <div class="ph"><h2>G3 — Penyusunan RPP</h2>
+      <div class="ph"><h2>G3 — Penyusunan Modul Ajar</h2>
         <p>16 aspek · Ada = 1, Tidak Ada = 0 · Skor Maks = 16</p></div>
       <div class="gsl"><label>🎯 Guru:</label><select id="sG3" onchange="loadI('g3')"><option value="">— Pilih guru —</option></select><button class="btn bo bs np" onclick="ctkI('g3')">🖨️ Cetak</button></div>
       <div id="cG3"><div class="emp" style="padding:40px"><div class="ei">👆</div><h3>Pilih guru untuk mulai penilaian</h3></div></div>
@@ -364,12 +364,12 @@ const DEF = {
       {id:'a1', no:'1',  label:'Kalender Pendidikan'},
       {id:'a2', no:'2',  label:'Program Tahunan'},
       {id:'a3', no:'3',  label:'Program Semester'},
-      {id:'a4', no:'4',  label:'Silabus'},
-      {id:'a5', no:'5',  label:'Rencana Pelaksanaan Pembelajaran (RPP)'},
+      {id:'a4', no:'4',  label:'Capaian Pembelajaran'},
+      {id:'a5', no:'5',  label:'Modul Ajar'},
       {id:'a6', no:'6',  label:'Jadwal Tatap Muka'},
       {id:'a7', no:'7',  label:'Agenda Harian'},
       {id:'a8', no:'8',  label:'Daftar Nilai (Sikap, Pengetahuan, dan Keterampilan)'},
-      {id:'a9', no:'9',  label:'Kriteria Ketuntasan Minimal'},
+      {id:'a9', no:'9',  label:'Kriteria Ketuntasan Tujuan Pembelajaran'},
       {id:'a10',no:'10', label:'Absensi Siswa'},
       {id:'a11',no:'11', label:'Buku Pegangan Guru'},
       {id:'a12',no:'12', label:'Buku Teks Siswa'},
@@ -411,28 +411,29 @@ const DEF = {
     ]
   },
   g3:{
-    judul:'Penyusunan RPP (Perencanaan Pembelajaran)',
+    judul:'Penyusunan Modul Ajar',
     maks:16,
     aspek:[
-      {id:'a1', no:'1',  label:'Identitas Sekolah'},
-      {id:'a2', no:'2',  label:'Kompetensi Inti'},
-      {id:'a3', no:'3',  label:'Kompetensi Dasar'},
-      {id:'a4', no:'4',  label:'Indikator Pencapaian Kompetensi'},
-      {id:'a5', no:'5',  label:'Tujuan Pembelajaran'},
-      {id:'a6', no:'6',  label:'Materi Pembelajaran'},
-      {id:'a7', no:'7',  label:'Pendekatan, Model dan Metode Pembelajaran'},
-      {g:'8. Kegiatan Pembelajaran:'},
-      {id:'a8', no:'8a', label:'Kegiatan Pendahuluan', ind:1},
-      {id:'a9', no:'8b', label:'Kegiatan Inti', ind:1},
-      {id:'a10',no:'8c', label:'Kegiatan Penutup', ind:1},
-      {g:'9. Penilaian, Remedial, Pengayaan:'},
-      {id:'a11',no:'9a', label:'Teknik Penilaian', ind:1},
-      {id:'a12',no:'9b', label:'Instrumen Penilaian', ind:1},
-      {id:'a13',no:'9c', label:'Remedial, Pengayaan', ind:1},
-      {g:'10. Media / Alat / Bahan / Sumber:'},
-      {id:'a14',no:'10a',label:'Media / Alat', ind:1},
-      {id:'a15',no:'10b',label:'Bahan', ind:1},
-      {id:'a16',no:'10c',label:'Sumber Belajar', ind:1},
+      {id:'a1', no:'1',  label:'Identitas Modul'},
+      {id:'a2', no:'2',  label:'Identitas Kesiapan Peserta Didik'},
+      {id:'a3', no:'3',  label:'Karakteristik Mata Pelajaran'},
+      {id:'a4', no:'4',  label:'Dimensi Profil Lulusan'},
+      {id:'a5', no:'5',  label:'Desain Pembelajaran'},
+      {id:'a6', no:'6',  label:'Tujuan Pembelajaran'},
+      {id:'a7', no:'7',  label:'Topik Pembelajaran Kontekstual'},
+      {id:'a8', no:'8',  label:'Kerangka Pembelajaran'},
+      {g:'9. Kegiatan Pembelajaran:'},
+      {id:'a9', no:'9a', label:'Kegiatan Pendahuluan', ind:1},
+      {id:'a10', no:'9b', label:'Kegiatan Inti', ind:1},
+      {id:'a11',no:'9c', label:'Kegiatan Penutup', ind:1},
+      {g:'10. Penilaian, Remedial, Pengayaan:'},
+      {id:'a12',no:'10a', label:'Teknik Penilaian', ind:1},
+      {id:'a13',no:'10b', label:'Instrumen Penilaian', ind:1},
+      {id:'a14',no:'10c', label:'Remedial, Pengayaan', ind:1},
+      {g:'11. Media / Alat / Bahan / Sumber:'},
+      {id:'a15',no:'11a',label:'Media / Alat', ind:1},
+      {id:'a16',no:'11b',label:'Bahan', ind:1},
+      {id:'a17',no:'11c',label:'Sumber Belajar', ind:1},
     ]
   },
   g4:{
@@ -500,10 +501,10 @@ const DEF = {
 
 // Tindak Lanjut — sesuai sheet Evaluasi Excel
 function getTL(v){
-  if(v>=90)return'Memotivasi guru untuk belajar mandiri tentang penyusunan perangkat pembelajaran, penilaian proses dan hasil belajar, penyusunan RPP dan pengelolaan pembelajaran.';
-  if(v>=75)return'Guru dibimbing untuk belajar tentang penyusunan perangkat pembelajaran, penilaian proses dan hasil belajar, penyusunan RPP dan pengelolaan pembelajaran.';
-  if(v>=60)return'Guru diberi pelatihan / workshop tentang penyusunan perangkat pembelajaran, penilaian proses dan hasil belajar, penyusunan RPP dan pengelolaan pembelajaran.';
-  return'Semua Guru diberi pelatihan / workshop tentang penyusunan perangkat pembelajaran, penilaian proses dan hasil belajar, penyusunan RPP dan pengelolaan pembelajaran.';
+  if(v>=90)return'Memotivasi guru untuk belajar mandiri tentang penyusunan perangkat pembelajaran, penilaian proses dan hasil belajar, penyusunan Modul Ajar dan pengelolaan pembelajaran.';
+  if(v>=75)return'Guru dibimbing untuk belajar tentang penyusunan perangkat pembelajaran, penilaian proses dan hasil belajar, penyusunan Modul Ajar dan pengelolaan pembelajaran.';
+  if(v>=60)return'Guru diberi pelatihan / workshop tentang penyusunan perangkat pembelajaran, penilaian proses dan hasil belajar, penyusunan Modul Ajar dan pengelolaan pembelajaran.';
+  return'Semua Guru diberi pelatihan / workshop tentang penyusunan perangkat pembelajaran, penilaian proses dan hasil belajar, penyusunan Modul Ajar dan pengelolaan pembelajaran.';
 }
 
 // ============================================================
@@ -546,7 +547,7 @@ function gavg(gid){
 // ============================================================
 // NAVIGATION
 // ============================================================
-const PT={dash:'📊 Dashboard',guru:'👥 Data Guru',g1:'📋 G1 — Adm. Perencanaan',g2:'📝 G2 — Penilaian Belajar',g3:'📄 G3 — Penyusunan RPP',g4:'🏫 G4 — Supervisi KBM',rekap:'📈 Rekap Nilai',sett:'⚙️ Pengaturan'};
+const PT={dash:'📊 Dashboard',guru:'👥 Data Guru',g1:'📋 G1 — Adm. Perencanaan',g2:'📝 G2 — Penilaian Belajar',g3:'📄 G3 — Penyusunan Modul Ajar',g4:'🏫 G4 — Supervisi KBM',rekap:'📈 Rekap Nilai',sett:'⚙️ Pengaturan'};
 function go(id){
   document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
   document.querySelectorAll('.nv').forEach(n=>n.classList.remove('on'));
